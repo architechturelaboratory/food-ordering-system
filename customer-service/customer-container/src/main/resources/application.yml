@@ -1,5 +1,5 @@
 server:
-  port: 8184
+  port: ${CUSTOMER_SERVICE_PORT}
 
 customer-service:
   customer-topic-name: customer
@@ -13,20 +13,20 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=customer&binaryTransfer=true&reWriteBatchedInserts=true
-    username: postgres
-    password: admin
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
     platform: postgres
   sql:
     init:
-      mode: ALWAYS
+      mode: ${SQL_INIT_MODE}
       schema-locations: classpath:init-schema.sql
 
 kafka-config:
-  bootstrap-servers: localhost:19092, localhost:29092, localhost:39092
+  bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
   schema-registry-url-key: schema.registry.url
-  schema-registry-url: http://localhost:8081
+  schema-registry-url: ${SCHEMA_REGISTRY_URL}
   num-of-partitions: 3
   replication-factor: 3
 

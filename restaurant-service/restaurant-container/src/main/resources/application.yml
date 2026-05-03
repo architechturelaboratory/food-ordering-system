@@ -1,9 +1,9 @@
 server:
-  port: 8183
+  port: ${RESTAURANT_SERVICE_PORT}
 
 logging:
   level:
-    com.food.ordering.system: DEBUG
+    com.food.ordering.system: ${LOG_LEVEL_COM_FOOD_ORDERING_SYSTEM}
 
 restaurant-service:
   restaurant-approval-request-topic-name: restaurant-approval-request
@@ -20,20 +20,20 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=restaurant&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified
-    username: postgres
-    password: admin
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
     platform: postgres
   sql:
     init:
-      mode: ALWAYS
+      mode: ${SQL_INIT_MODE}
       schema-locations: classpath:init-schema.sql,classpath:init-data.sql
 
 kafka-config:
-  bootstrap-servers: localhost:19092, localhost:29092, localhost:39092
+  bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
   schema-registry-url-key: schema.registry.url
-  schema-registry-url: http://localhost:8081
+  schema-registry-url: ${SCHEMA_REGISTRY_URL}
   num-of-partitions: 3
   replication-factor: 3
 
