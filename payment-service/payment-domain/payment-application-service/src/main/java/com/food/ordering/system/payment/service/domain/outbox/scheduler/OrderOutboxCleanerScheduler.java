@@ -3,6 +3,7 @@ package com.food.ordering.system.payment.service.domain.outbox.scheduler;
 import com.food.ordering.system.outbox.OutboxScheduler;
 import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.payment.service.domain.outbox.model.OrderOutboxMessage;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -13,13 +14,10 @@ import java.util.Optional;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class OrderOutboxCleanerScheduler implements OutboxScheduler {
 
     private final OrderOutboxHelper orderOutboxHelper;
-
-    public OrderOutboxCleanerScheduler(OrderOutboxHelper orderOutboxHelper) {
-        this.orderOutboxHelper = orderOutboxHelper;
-    }
 
     @Override
     @Transactional

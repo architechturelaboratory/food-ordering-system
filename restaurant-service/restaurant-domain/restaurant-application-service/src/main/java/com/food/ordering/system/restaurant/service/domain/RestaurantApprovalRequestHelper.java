@@ -12,6 +12,7 @@ import com.food.ordering.system.restaurant.service.domain.outbox.scheduler.Order
 import com.food.ordering.system.restaurant.service.domain.ports.output.message.publisher.RestaurantApprovalResponseMessagePublisher;
 import com.food.ordering.system.restaurant.service.domain.ports.output.repository.OrderApprovalRepository;
 import com.food.ordering.system.restaurant.service.domain.ports.output.repository.RestaurantRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ import java.util.UUID;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class RestaurantApprovalRequestHelper {
 
     private final RestaurantDomainService restaurantDomainService;
@@ -31,23 +33,6 @@ public class RestaurantApprovalRequestHelper {
     private final OrderApprovalRepository orderApprovalRepository;
     private final OrderOutboxHelper orderOutboxHelper;
     private final RestaurantApprovalResponseMessagePublisher restaurantApprovalResponseMessagePublisher;
-
-
-
-    public RestaurantApprovalRequestHelper(RestaurantDomainService restaurantDomainService,
-                                           RestaurantDataMapper restaurantDataMapper,
-                                           RestaurantRepository restaurantRepository,
-                                           OrderApprovalRepository orderApprovalRepository,
-                                           OrderOutboxHelper orderOutboxHelper,
-                                           RestaurantApprovalResponseMessagePublisher
-                                                   restaurantApprovalResponseMessagePublisher) {
-        this.restaurantDomainService = restaurantDomainService;
-        this.restaurantDataMapper = restaurantDataMapper;
-        this.restaurantRepository = restaurantRepository;
-        this.orderApprovalRepository = orderApprovalRepository;
-        this.orderOutboxHelper = orderOutboxHelper;
-        this.restaurantApprovalResponseMessagePublisher = restaurantApprovalResponseMessagePublisher;
-    }
 
     @Transactional
     public void persistOrderApproval(RestaurantApprovalRequest restaurantApprovalRequest) {

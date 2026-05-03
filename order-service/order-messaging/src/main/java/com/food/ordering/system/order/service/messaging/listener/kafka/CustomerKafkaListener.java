@@ -4,6 +4,7 @@ import com.food.ordering.system.kafka.consumer.KafkaConsumer;
 import com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel;
 import com.food.ordering.system.order.service.domain.ports.input.message.listener.customer.CustomerMessageListener;
 import com.food.ordering.system.order.service.messaging.mapper.OrderMessagingDataMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.KafkaHeaders;
@@ -15,16 +16,11 @@ import java.util.List;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class CustomerKafkaListener implements KafkaConsumer<CustomerAvroModel> {
 
     private final CustomerMessageListener customerMessageListener;
     private final OrderMessagingDataMapper orderMessagingDataMapper;
-
-    public CustomerKafkaListener(CustomerMessageListener customerMessageListener,
-                                 OrderMessagingDataMapper orderMessagingDataMapper) {
-        this.customerMessageListener = customerMessageListener;
-        this.orderMessagingDataMapper = orderMessagingDataMapper;
-    }
 
     @Override
     @KafkaListener(id = "${kafka-consumer-config.customer-group-id}", topics = "${order-service.customer-topic-name}")

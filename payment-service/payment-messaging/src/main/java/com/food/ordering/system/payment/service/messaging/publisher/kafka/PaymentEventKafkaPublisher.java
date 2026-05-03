@@ -9,6 +9,7 @@ import com.food.ordering.system.payment.service.domain.outbox.model.OrderEventPa
 import com.food.ordering.system.payment.service.domain.outbox.model.OrderOutboxMessage;
 import com.food.ordering.system.payment.service.domain.ports.output.message.publisher.PaymentResponseMessagePublisher;
 import com.food.ordering.system.payment.service.messaging.mapper.PaymentMessagingDataMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -16,22 +17,13 @@ import java.util.function.BiConsumer;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class PaymentEventKafkaPublisher implements PaymentResponseMessagePublisher {
 
     private final PaymentMessagingDataMapper paymentMessagingDataMapper;
     private final KafkaProducer<String, PaymentResponseAvroModel> kafkaProducer;
     private final PaymentServiceConfigData paymentServiceConfigData;
     private final KafkaMessageHelper kafkaMessageHelper;
-
-    public PaymentEventKafkaPublisher(PaymentMessagingDataMapper paymentMessagingDataMapper,
-                                      KafkaProducer<String, PaymentResponseAvroModel> kafkaProducer,
-                                      PaymentServiceConfigData paymentServiceConfigData,
-                                      KafkaMessageHelper kafkaMessageHelper) {
-        this.paymentMessagingDataMapper = paymentMessagingDataMapper;
-        this.kafkaProducer = kafkaProducer;
-        this.paymentServiceConfigData = paymentServiceConfigData;
-        this.kafkaMessageHelper = kafkaMessageHelper;
-    }
 
     @Override
     public void publish(OrderOutboxMessage orderOutboxMessage,

@@ -6,6 +6,7 @@ import com.food.ordering.system.customer.service.domain.ports.output.message.pub
 import com.food.ordering.system.customer.service.messaging.mapper.CustomerMessagingDataMapper;
 import com.food.ordering.system.kafka.order.avro.model.CustomerAvroModel;
 import com.food.ordering.system.kafka.producer.service.KafkaProducer;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.springframework.kafka.support.SendResult;
@@ -15,6 +16,7 @@ import java.util.function.BiConsumer;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class CustomerCreatedEventKafkaPublisher implements CustomerMessagePublisher {
 
     private final CustomerMessagingDataMapper customerMessagingDataMapper;
@@ -22,14 +24,6 @@ public class CustomerCreatedEventKafkaPublisher implements CustomerMessagePublis
     private final KafkaProducer<String, CustomerAvroModel> kafkaProducer;
 
     private final CustomerServiceConfigData customerServiceConfigData;
-
-    public CustomerCreatedEventKafkaPublisher(CustomerMessagingDataMapper customerMessagingDataMapper,
-                                              KafkaProducer<String, CustomerAvroModel> kafkaProducer,
-                                              CustomerServiceConfigData customerServiceConfigData) {
-        this.customerMessagingDataMapper = customerMessagingDataMapper;
-        this.kafkaProducer = kafkaProducer;
-        this.customerServiceConfigData = customerServiceConfigData;
-    }
 
     @Override
     public void publish(CustomerCreatedEvent customerCreatedEvent) {

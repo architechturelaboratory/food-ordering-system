@@ -9,6 +9,7 @@ import com.food.ordering.system.order.service.domain.outbox.model.approval.Order
 import com.food.ordering.system.order.service.domain.ports.output.message.publisher.restaurantapproval.RestaurantApprovalRequestMessagePublisher;
 import com.food.ordering.system.order.service.messaging.mapper.OrderMessagingDataMapper;
 import com.food.ordering.system.outbox.OutboxStatus;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -16,23 +17,13 @@ import java.util.function.BiConsumer;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class OrderApprovalEventKafkaPublisher implements RestaurantApprovalRequestMessagePublisher {
 
     private final OrderMessagingDataMapper orderMessagingDataMapper;
     private final KafkaProducer<String, RestaurantApprovalRequestAvroModel> kafkaProducer;
     private final OrderServiceConfigData orderServiceConfigData;
     private final KafkaMessageHelper kafkaMessageHelper;
-
-    public OrderApprovalEventKafkaPublisher(OrderMessagingDataMapper orderMessagingDataMapper,
-                                            KafkaProducer<String, RestaurantApprovalRequestAvroModel> kafkaProducer,
-                                            OrderServiceConfigData orderServiceConfigData,
-                                            KafkaMessageHelper kafkaMessageHelper) {
-        this.orderMessagingDataMapper = orderMessagingDataMapper;
-        this.kafkaProducer = kafkaProducer;
-        this.orderServiceConfigData = orderServiceConfigData;
-        this.kafkaMessageHelper = kafkaMessageHelper;
-    }
-
 
     @Override
     public void publish(OrderApprovalOutboxMessage orderApprovalOutboxMessage,

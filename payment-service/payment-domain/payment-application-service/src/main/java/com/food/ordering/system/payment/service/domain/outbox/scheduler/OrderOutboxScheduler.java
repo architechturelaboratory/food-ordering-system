@@ -4,6 +4,7 @@ import com.food.ordering.system.outbox.OutboxScheduler;
 import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.payment.service.domain.outbox.model.OrderOutboxMessage;
 import com.food.ordering.system.payment.service.domain.ports.output.message.publisher.PaymentResponseMessagePublisher;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -15,16 +16,11 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class OrderOutboxScheduler implements OutboxScheduler {
 
     private final OrderOutboxHelper orderOutboxHelper;
     private final PaymentResponseMessagePublisher paymentResponseMessagePublisher;
-
-    public OrderOutboxScheduler(OrderOutboxHelper orderOutboxHelper,
-                                PaymentResponseMessagePublisher paymentResponseMessagePublisher) {
-        this.orderOutboxHelper = orderOutboxHelper;
-        this.paymentResponseMessagePublisher = paymentResponseMessagePublisher;
-    }
 
     @Override
     @Transactional

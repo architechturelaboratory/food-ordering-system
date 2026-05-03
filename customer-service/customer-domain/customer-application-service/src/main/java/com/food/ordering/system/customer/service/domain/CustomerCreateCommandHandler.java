@@ -6,27 +6,19 @@ import com.food.ordering.system.customer.service.domain.event.CustomerCreatedEve
 import com.food.ordering.system.customer.service.domain.exception.CustomerDomainException;
 import com.food.ordering.system.customer.service.domain.mapper.CustomerDataMapper;
 import com.food.ordering.system.customer.service.domain.ports.output.repository.CustomerRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 class CustomerCreateCommandHandler {
 
     private final CustomerDomainService customerDomainService;
-
     private final CustomerRepository customerRepository;
-
     private final CustomerDataMapper customerDataMapper;
-
-    public CustomerCreateCommandHandler(CustomerDomainService customerDomainService,
-                                        CustomerRepository customerRepository,
-                                        CustomerDataMapper customerDataMapper) {
-        this.customerDomainService = customerDomainService;
-        this.customerRepository = customerRepository;
-        this.customerDataMapper = customerDataMapper;
-    }
 
     @Transactional
     public CustomerCreatedEvent createCustomer(CreateCustomerCommand createCustomerCommand) {

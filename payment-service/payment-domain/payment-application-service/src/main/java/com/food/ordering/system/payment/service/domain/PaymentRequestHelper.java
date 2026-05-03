@@ -17,6 +17,7 @@ import com.food.ordering.system.payment.service.domain.ports.output.message.publ
 import com.food.ordering.system.payment.service.domain.ports.output.repository.CreditEntryRepository;
 import com.food.ordering.system.payment.service.domain.ports.output.repository.CreditHistoryRepository;
 import com.food.ordering.system.payment.service.domain.ports.output.repository.PaymentRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,7 @@ import java.util.UUID;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class PaymentRequestHelper {
 
     private final PaymentDomainService paymentDomainService;
@@ -37,22 +39,6 @@ public class PaymentRequestHelper {
     private final CreditHistoryRepository creditHistoryRepository;
     private final OrderOutboxHelper orderOutboxHelper;
     private final PaymentResponseMessagePublisher paymentResponseMessagePublisher;
-
-    public PaymentRequestHelper(PaymentDomainService paymentDomainService,
-                                PaymentDataMapper paymentDataMapper,
-                                PaymentRepository paymentRepository,
-                                CreditEntryRepository creditEntryRepository,
-                                CreditHistoryRepository creditHistoryRepository,
-                                OrderOutboxHelper orderOutboxHelper,
-                                PaymentResponseMessagePublisher paymentResponseMessagePublisher) {
-        this.paymentDomainService = paymentDomainService;
-        this.paymentDataMapper = paymentDataMapper;
-        this.paymentRepository = paymentRepository;
-        this.creditEntryRepository = creditEntryRepository;
-        this.creditHistoryRepository = creditHistoryRepository;
-        this.orderOutboxHelper = orderOutboxHelper;
-        this.paymentResponseMessagePublisher = paymentResponseMessagePublisher;
-    }
 
     @Transactional
     public void persistPayment(PaymentRequest paymentRequest) {

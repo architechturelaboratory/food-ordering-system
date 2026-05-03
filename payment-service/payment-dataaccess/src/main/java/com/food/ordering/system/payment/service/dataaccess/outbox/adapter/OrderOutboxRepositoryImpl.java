@@ -7,6 +7,7 @@ import com.food.ordering.system.payment.service.dataaccess.outbox.mapper.OrderOu
 import com.food.ordering.system.payment.service.dataaccess.outbox.repository.OrderOutboxJpaRepository;
 import com.food.ordering.system.payment.service.domain.outbox.model.OrderOutboxMessage;
 import com.food.ordering.system.payment.service.domain.ports.output.repository.OrderOutboxRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,16 +16,11 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class OrderOutboxRepositoryImpl implements OrderOutboxRepository {
 
     private final OrderOutboxJpaRepository orderOutboxJpaRepository;
     private final OrderOutboxDataAccessMapper orderOutboxDataAccessMapper;
-
-    public OrderOutboxRepositoryImpl(OrderOutboxJpaRepository orderOutboxJpaRepository,
-                                     OrderOutboxDataAccessMapper orderOutboxDataAccessMapper) {
-        this.orderOutboxJpaRepository = orderOutboxJpaRepository;
-        this.orderOutboxDataAccessMapper = orderOutboxDataAccessMapper;
-    }
 
     @Override
     public OrderOutboxMessage save(OrderOutboxMessage orderPaymentOutboxMessage) {

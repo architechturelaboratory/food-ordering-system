@@ -7,6 +7,7 @@ import com.food.ordering.system.order.service.domain.outbox.model.approval.Order
 import com.food.ordering.system.order.service.domain.ports.output.repository.ApprovalOutboxRepository;
 import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.saga.SagaStatus;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -16,16 +17,11 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class ApprovalOutboxRepositoryImpl implements ApprovalOutboxRepository {
 
     private final ApprovalOutboxJpaRepository approvalOutboxJpaRepository;
     private final ApprovalOutboxDataAccessMapper approvalOutboxDataAccessMapper;
-
-    public ApprovalOutboxRepositoryImpl(ApprovalOutboxJpaRepository approvalOutboxJpaRepository,
-                                        ApprovalOutboxDataAccessMapper approvalOutboxDataAccessMapper) {
-        this.approvalOutboxJpaRepository = approvalOutboxJpaRepository;
-        this.approvalOutboxDataAccessMapper = approvalOutboxDataAccessMapper;
-    }
 
     @Override
     public OrderApprovalOutboxMessage save(OrderApprovalOutboxMessage orderApprovalOutboxMessage) {

@@ -5,21 +5,17 @@ import com.food.ordering.system.payment.service.dataaccess.creditentry.mapper.Cr
 import com.food.ordering.system.payment.service.dataaccess.creditentry.repository.CreditEntryJpaRepository;
 import com.food.ordering.system.payment.service.domain.entity.CreditEntry;
 import com.food.ordering.system.payment.service.domain.ports.output.repository.CreditEntryRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Component
+@RequiredArgsConstructor
 public class CreditEntryRepositoryImpl implements CreditEntryRepository {
 
     private final CreditEntryJpaRepository creditEntryJpaRepository;
     private final CreditEntryDataAccessMapper creditEntryDataAccessMapper;
-
-    public CreditEntryRepositoryImpl(CreditEntryJpaRepository creditEntryJpaRepository,
-                                     CreditEntryDataAccessMapper creditEntryDataAccessMapper) {
-        this.creditEntryJpaRepository = creditEntryJpaRepository;
-        this.creditEntryDataAccessMapper = creditEntryDataAccessMapper;
-    }
 
     @Override
     public CreditEntry save(CreditEntry creditEntry) {

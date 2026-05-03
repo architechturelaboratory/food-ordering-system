@@ -6,6 +6,7 @@ import com.food.ordering.system.payment.service.dataaccess.credithistory.mapper.
 import com.food.ordering.system.payment.service.dataaccess.credithistory.repository.CreditHistoryJpaRepository;
 import com.food.ordering.system.payment.service.domain.entity.CreditHistory;
 import com.food.ordering.system.payment.service.domain.ports.output.repository.CreditHistoryRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,16 +14,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class CreditHistoryRepositoryImpl implements CreditHistoryRepository {
 
     private final CreditHistoryJpaRepository creditHistoryJpaRepository;
     private final CreditHistoryDataAccessMapper creditHistoryDataAccessMapper;
-
-    public CreditHistoryRepositoryImpl(CreditHistoryJpaRepository creditHistoryJpaRepository,
-                                       CreditHistoryDataAccessMapper creditHistoryDataAccessMapper) {
-        this.creditHistoryJpaRepository = creditHistoryJpaRepository;
-        this.creditHistoryDataAccessMapper = creditHistoryDataAccessMapper;
-    }
 
     @Override
     public CreditHistory save(CreditHistory creditHistory) {

@@ -4,6 +4,7 @@ import com.food.ordering.system.order.service.domain.outbox.model.payment.OrderP
 import com.food.ordering.system.outbox.OutboxScheduler;
 import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.saga.SagaStatus;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -14,13 +15,10 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class PaymentOutboxCleanerScheduler implements OutboxScheduler {
 
     private final PaymentOutboxHelper paymentOutboxHelper;
-
-    public PaymentOutboxCleanerScheduler(PaymentOutboxHelper paymentOutboxHelper) {
-        this.paymentOutboxHelper = paymentOutboxHelper;
-    }
 
     @Override
     @Scheduled(cron = "@midnight")

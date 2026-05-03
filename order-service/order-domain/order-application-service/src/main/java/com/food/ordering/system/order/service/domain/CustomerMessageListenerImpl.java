@@ -6,20 +6,17 @@ import com.food.ordering.system.order.service.domain.exception.OrderDomainExcept
 import com.food.ordering.system.order.service.domain.mapper.OrderDataMapper;
 import com.food.ordering.system.order.service.domain.ports.input.message.listener.customer.CustomerMessageListener;
 import com.food.ordering.system.order.service.domain.ports.output.repository.CustomerRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class CustomerMessageListenerImpl implements CustomerMessageListener {
 
     private final CustomerRepository customerRepository;
     private final OrderDataMapper orderDataMapper;
-
-    public CustomerMessageListenerImpl(CustomerRepository customerRepository, OrderDataMapper orderDataMapper) {
-        this.customerRepository = customerRepository;
-        this.orderDataMapper = orderDataMapper;
-    }
 
     @Override
     public void customerCreated(CustomerModel customerModel) {

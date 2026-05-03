@@ -5,6 +5,7 @@ import com.food.ordering.system.order.service.domain.ports.output.message.publis
 import com.food.ordering.system.outbox.OutboxScheduler;
 import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.saga.SagaStatus;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -16,18 +17,11 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class RestaurantApprovalOutboxScheduler implements OutboxScheduler {
 
     private final ApprovalOutboxHelper approvalOutboxHelper;
     private final RestaurantApprovalRequestMessagePublisher restaurantApprovalRequestMessagePublisher;
-
-    public RestaurantApprovalOutboxScheduler(ApprovalOutboxHelper
-                                                     approvalOutboxHelper,
-                                             RestaurantApprovalRequestMessagePublisher
-                                                     restaurantApprovalRequestMessagePublisher) {
-        this.approvalOutboxHelper = approvalOutboxHelper;
-        this.restaurantApprovalRequestMessagePublisher = restaurantApprovalRequestMessagePublisher;
-    }
 
     @Override
     @Transactional

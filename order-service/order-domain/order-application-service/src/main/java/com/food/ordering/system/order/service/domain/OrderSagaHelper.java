@@ -6,6 +6,7 @@ import com.food.ordering.system.order.service.domain.entity.Order;
 import com.food.ordering.system.order.service.domain.exception.OrderNotFoundException;
 import com.food.ordering.system.order.service.domain.ports.output.repository.OrderRepository;
 import com.food.ordering.system.saga.SagaStatus;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -14,13 +15,10 @@ import java.util.UUID;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class OrderSagaHelper {
 
     private final OrderRepository orderRepository;
-
-    public OrderSagaHelper(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
-    }
 
     Order findOrder(String orderId) {
         Optional<Order> orderResponse = orderRepository.findById(new OrderId(UUID.fromString(orderId)));

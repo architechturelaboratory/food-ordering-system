@@ -8,6 +8,7 @@ import com.food.ordering.system.payment.service.domain.exception.PaymentDomainEx
 import com.food.ordering.system.payment.service.domain.outbox.model.OrderEventPayload;
 import com.food.ordering.system.payment.service.domain.outbox.model.OrderOutboxMessage;
 import com.food.ordering.system.payment.service.domain.ports.output.repository.OrderOutboxRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,15 +24,11 @@ import static com.food.ordering.system.saga.order.SagaConstants.ORDER_SAGA_NAME;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class OrderOutboxHelper {
 
     private final OrderOutboxRepository orderOutboxRepository;
     private final ObjectMapper objectMapper;
-
-    public OrderOutboxHelper(OrderOutboxRepository orderOutboxRepository, ObjectMapper objectMapper) {
-        this.orderOutboxRepository = orderOutboxRepository;
-        this.objectMapper = objectMapper;
-    }
 
     @Transactional(readOnly = true)
     public Optional<OrderOutboxMessage> getCompletedOrderOutboxMessageBySagaIdAndPaymentStatus(UUID sagaId,

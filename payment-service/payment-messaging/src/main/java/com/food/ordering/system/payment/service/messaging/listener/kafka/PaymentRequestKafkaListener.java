@@ -7,6 +7,7 @@ import com.food.ordering.system.payment.service.domain.exception.PaymentApplicat
 import com.food.ordering.system.payment.service.domain.exception.PaymentNotFoundException;
 import com.food.ordering.system.payment.service.domain.ports.input.message.listener.PaymentRequestMessageListener;
 import com.food.ordering.system.payment.service.messaging.mapper.PaymentMessagingDataMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.postgresql.util.PSQLState;
 import org.springframework.dao.DataAccessException;
@@ -21,16 +22,11 @@ import java.util.List;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class PaymentRequestKafkaListener implements KafkaConsumer<PaymentRequestAvroModel> {
 
     private final PaymentRequestMessageListener paymentRequestMessageListener;
     private final PaymentMessagingDataMapper paymentMessagingDataMapper;
-
-    public PaymentRequestKafkaListener(PaymentRequestMessageListener paymentRequestMessageListener,
-                                       PaymentMessagingDataMapper paymentMessagingDataMapper) {
-        this.paymentRequestMessageListener = paymentRequestMessageListener;
-        this.paymentMessagingDataMapper = paymentMessagingDataMapper;
-    }
 
     @Override
     @KafkaListener(id = "${kafka-consumer-config.payment-consumer-group-id}",

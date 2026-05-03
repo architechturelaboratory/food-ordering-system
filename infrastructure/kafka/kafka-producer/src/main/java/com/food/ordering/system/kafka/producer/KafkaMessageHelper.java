@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.food.ordering.system.domain.exception.DomainException;
 import com.food.ordering.system.outbox.OutboxStatus;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.springframework.kafka.support.SendResult;
@@ -13,13 +14,10 @@ import java.util.function.BiConsumer;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class KafkaMessageHelper {
 
     private final ObjectMapper objectMapper;
-
-    public KafkaMessageHelper(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-    }
 
     public <T> T getEventPayload(String payload, Class<T> outputType) {
         try {

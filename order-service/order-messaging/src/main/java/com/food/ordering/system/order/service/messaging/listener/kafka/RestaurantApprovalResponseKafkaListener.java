@@ -7,6 +7,7 @@ import com.food.ordering.system.order.service.domain.entity.Order;
 import com.food.ordering.system.order.service.domain.exception.OrderNotFoundException;
 import com.food.ordering.system.order.service.domain.ports.input.message.listener.restaurantapproval.RestaurantApprovalResponseMessageListener;
 import com.food.ordering.system.order.service.messaging.mapper.OrderMessagingDataMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -21,17 +22,11 @@ import static com.food.ordering.system.order.service.domain.entity.Order.FAILURE
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class RestaurantApprovalResponseKafkaListener implements KafkaConsumer<RestaurantApprovalResponseAvroModel> {
 
     private final RestaurantApprovalResponseMessageListener restaurantApprovalResponseMessageListener;
     private final OrderMessagingDataMapper orderMessagingDataMapper;
-
-    public RestaurantApprovalResponseKafkaListener(RestaurantApprovalResponseMessageListener
-                                                           restaurantApprovalResponseMessageListener,
-                                                   OrderMessagingDataMapper orderMessagingDataMapper) {
-        this.restaurantApprovalResponseMessageListener = restaurantApprovalResponseMessageListener;
-        this.orderMessagingDataMapper = orderMessagingDataMapper;
-    }
 
     @Override
     @KafkaListener(id = "${kafka-consumer-config.restaurant-approval-consumer-group-id}",

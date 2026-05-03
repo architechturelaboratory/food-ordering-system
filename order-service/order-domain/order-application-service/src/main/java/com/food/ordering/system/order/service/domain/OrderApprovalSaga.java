@@ -13,6 +13,7 @@ import com.food.ordering.system.order.service.domain.outbox.scheduler.payment.Pa
 import com.food.ordering.system.outbox.OutboxStatus;
 import com.food.ordering.system.saga.SagaStatus;
 import com.food.ordering.system.saga.SagaStep;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,7 @@ import static com.food.ordering.system.domain.DomainConstants.UTC;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class OrderApprovalSaga implements SagaStep<RestaurantApprovalResponse> {
 
     private final OrderDomainService orderDomainService;
@@ -33,18 +35,6 @@ public class OrderApprovalSaga implements SagaStep<RestaurantApprovalResponse> {
     private final PaymentOutboxHelper paymentOutboxHelper;
     private final ApprovalOutboxHelper approvalOutboxHelper;
     private final OrderDataMapper orderDataMapper;
-
-    public OrderApprovalSaga(OrderDomainService orderDomainService,
-                             OrderSagaHelper orderSagaHelper,
-                             PaymentOutboxHelper paymentOutboxHelper,
-                             ApprovalOutboxHelper approvalOutboxHelper,
-                             OrderDataMapper orderDataMapper) {
-        this.orderDomainService = orderDomainService;
-        this.orderSagaHelper = orderSagaHelper;
-        this.paymentOutboxHelper = paymentOutboxHelper;
-        this.approvalOutboxHelper = approvalOutboxHelper;
-        this.orderDataMapper = orderDataMapper;
-    }
 
     @Override
     @Transactional
