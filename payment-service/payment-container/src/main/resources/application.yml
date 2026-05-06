@@ -28,7 +28,8 @@ spring:
   sql:
     init:
       mode: ${SQL_INIT_MODE}
-      schema-locations: classpath:init-schema.sql,classpath:init-data.sql
+      schema-locations: classpath:init-schema.sql
+      data-locations: classpath:init-data.sql
 
 kafka-config:
   bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}

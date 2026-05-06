@@ -76,3 +76,9 @@ dependent-services:
     url: ${PAYMENT_SERVICE_URL}
   restaurant-service:
     url: ${RESTAURANT_SERVICE_URL}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui/index.html
+  api-docs:
+    path: /v3/api-docs

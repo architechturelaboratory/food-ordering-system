@@ -40,3 +40,9 @@ kafka-producer-config:
   linger-ms: 5
   request-timeout-ms: 60000
   retry-count: 5
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui/index.html
+  api-docs:
+    path: /v3/api-docs
