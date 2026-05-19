@@ -19,6 +19,7 @@ public class KafkaMessageHelper {
 
     private final ObjectMapper objectMapper;
 
+    // Bu methodun amacı da
     public <T> T getEventPayload(String payload, Class<T> outputType) {
         try {
             return objectMapper.readValue(payload, outputType);
@@ -28,6 +29,8 @@ public class KafkaMessageHelper {
         }
     }
 
+    // Bu methodun amacı kafkaya çıkılan mesajın başarı veya fail durumuna göre outbox table güncelleyen
+    // ve loglayan kafka callback methodunu oluşturmak.
     public <T, U> BiConsumer<SendResult<String, T>, Throwable>
     getKafkaCallback(String responseTopicName, T avroModel, U outboxMessage,
                      BiConsumer<U, OutboxStatus> outboxCallback,

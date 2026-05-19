@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: development
+
+configMapGenerator:
+  - name: kafka-cluster-id
+    files:
+      - clusterId=cluster-id/clusterId
+
+resources:
+  - configmap.yaml
+  - kafka-broker-1.yaml
+  - kafka-broker-2.yaml
+  - kafka-broker-3.yaml
+  - sr.yaml
+  - kafka-ui.yaml
+  - topics-job.yaml

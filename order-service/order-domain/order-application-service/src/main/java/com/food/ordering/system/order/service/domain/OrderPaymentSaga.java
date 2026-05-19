@@ -44,6 +44,7 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
     @Override
     @Transactional
     public void process(PaymentResponse paymentResponse) {
+        //first search current outbox message with status STARTED to provide idempotency then reject if cant find
         Optional<OrderPaymentOutboxMessage> orderPaymentOutboxMessageResponse =
                 paymentOutboxHelper.getPaymentOutboxMessageBySagaIdAndSagaStatus(
                         UUID.fromString(paymentResponse.getSagaId()),
@@ -56,13 +57,17 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
 
         OrderPaymentOutboxMessage orderPaymentOutboxMessage = orderPaymentOutboxMessageResponse.get();
 
+        // domainde payment sonrası order güncellendi PENDING -> PAID status
         OrderPaidEvent domainEvent = completePaymentForOrder(paymentResponse);
 
+        // specify next saga status for distributed transaction STARTED -> PROCESSING
         SagaStatus sagaStatus = orderSagaHelper.orderStatusToSagaStatus(domainEvent.getOrder().getOrderStatus());
 
+        // Order domininde payment verisi işlendi güncellemesi payment outbox tablosunda STARTED -> PROCESSING
         paymentOutboxHelper.save(getUpdatedPaymentOutboxMessage(orderPaymentOutboxMessage,
                 domainEvent.getOrder().getOrderStatus(), sagaStatus));
 
+        // en sonunda da approval için approval outbox tablosuna yönlendir
         approvalOutboxHelper
                 .saveApprovalOutboxMessage(orderDataMapper.orderPaidEventToOrderApprovalEventPayload(domainEvent),
                         domainEvent.getOrder().getOrderStatus(),

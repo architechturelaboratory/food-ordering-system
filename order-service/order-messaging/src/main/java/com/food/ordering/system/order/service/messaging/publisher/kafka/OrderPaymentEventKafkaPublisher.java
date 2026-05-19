@@ -28,6 +28,8 @@ public class OrderPaymentEventKafkaPublisher implements PaymentRequestMessagePub
     @Override
     public void publish(OrderPaymentOutboxMessage orderPaymentOutboxMessage,
                         BiConsumer<OrderPaymentOutboxMessage, OutboxStatus> outboxCallback) {
+
+        // outbox table'dan çekilen mesajı json'dan objecte serialize ediyor
         OrderPaymentEventPayload orderPaymentEventPayload =
                 kafkaMessageHelper.getEventPayload(orderPaymentOutboxMessage.getPayload(),
                         OrderPaymentEventPayload.class);
@@ -48,7 +50,7 @@ public class OrderPaymentEventKafkaPublisher implements PaymentRequestMessagePub
                     kafkaMessageHelper.getKafkaCallback(orderServiceConfigData.getPaymentRequestTopicName(),
                             paymentRequestAvroModel,
                             orderPaymentOutboxMessage,
-                            outboxCallback,
+                            outboxCallback, // success ve hata durumlarını DB'ye işleyen callback
                             orderPaymentEventPayload.getOrderId(),
                             "PaymentRequestAvroModel"));
 
