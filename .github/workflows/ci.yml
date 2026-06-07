@@ -69,3 +69,25 @@ jobs:
           else
             echo "environment=development" >> $GITHUB_OUTPUT
           fi
+
+      - name: Update image tags in deployment repo
+        if: github.event_name == 'push'
+        env:
+          TAG: ${{ steps.version.outputs.tag }}
+          DEPLOY_REPO_TOKEN: ${{ secrets.DEPLOY_REPO_TOKEN }}
+          GITHUB_USER: ${{ env.GITHUB_USER }}
+        run: |
+          git clone https://x-access-token:${DEPLOY_REPO_TOKEN}@github.com/${GITHUB_USER}/food-ordering-cluster-deployment.git deploy-repo
+          cd deploy-repo
+          
+          sed -i "s|ghcr.io/${GITHUB_USER}/order-service:.*|ghcr.io/${GITHUB_USER}/order-service:${TAG}|" \
+            services/order-service/deployment.yaml
+          
+          # payment/restaurant/customer için deployment.yaml ekledikçe sed satırları buraya gelecek
+          
+          git config user.email "ci@github.com"
+          git config user.name "GitHub Actions"
+          git add .
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "ci: update image tags to ${TAG} [skip ci]"
+          git push
