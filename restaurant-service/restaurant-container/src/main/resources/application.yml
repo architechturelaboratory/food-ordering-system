@@ -1,6 +1,15 @@
 server:
   port: ${RESTAURANT_SERVICE_PORT}
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+  endpoint:
+    health:
+      show-details: always
+
 logging:
   level:
     com.food.ordering.system: ${LOG_LEVEL_COM_FOOD_ORDERING_SYSTEM}
