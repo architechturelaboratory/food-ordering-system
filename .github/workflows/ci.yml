@@ -5,6 +5,7 @@ on:
     branches: [ develop, main ]
   pull_request:
     branches: [ develop, main ]
+  workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
@@ -82,8 +83,15 @@ jobs:
           
           sed -i "s|ghcr.io/${GITHUB_USER}/order-service:.*|ghcr.io/${GITHUB_USER}/order-service:${TAG}|" \
             services/order-service/deployment.yaml
-          
-          # payment/restaurant/customer için deployment.yaml ekledikçe sed satırları buraya gelecek
+
+          sed -i "s|ghcr.io/${GITHUB_USER}/payment-service:.*|ghcr.io/${GITHUB_USER}/payment-service:${TAG}|" \
+            services/payment-service/deployment.yaml
+
+          sed -i "s|ghcr.io/${GITHUB_USER}/restaurant-service:.*|ghcr.io/${GITHUB_USER}/restaurant-service:${TAG}|" \
+            services/restaurant-service/deployment.yaml
+
+          sed -i "s|ghcr.io/${GITHUB_USER}/customer-service:.*|ghcr.io/${GITHUB_USER}/customer-service:${TAG}|" \
+            services/customer-service/deployment.yaml
           
           git config user.email "ci@github.com"
           git config user.name "GitHub Actions"
