@@ -1,5 +1,19 @@
-server:
-  port: ${ORDER_SERVICE_PORT}
+spring:
+  profiles:
+    default: local
+  jpa:
+    open-in-view: false
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    platform: postgres
+  sql:
+    init:
+      schema-locations: classpath:init-schema.sql
 
 management:
   endpoints:
@@ -10,10 +24,6 @@ management:
     health:
       show-details: always
 
-logging:
-  level:
-    com.food.ordering.system: ${LOG_LEVEL_COM_FOOD_ORDERING_SYSTEM}
-
 order-service:
   payment-request-topic-name: payment-request
   payment-response-topic-name: payment-response
@@ -23,29 +33,8 @@ order-service:
   outbox-scheduler-fixed-rate: 10000
   outbox-scheduler-initial-delay: 10000
 
-spring:
-  jpa:
-    open-in-view: false
-    show-sql: true
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-  datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-    driver-class-name: org.postgresql.Driver
-    platform: postgres
-  sql:
-    init:
-      mode: ${SQL_INIT_MODE}
-      schema-locations: classpath:init-schema.sql
-
 kafka-config:
-  bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
   schema-registry-url-key: schema.registry.url
-  schema-registry-url: ${SCHEMA_REGISTRY_URL}
   num-of-partitions: 3
   replication-factor: 3
 
@@ -79,12 +68,6 @@ kafka-consumer-config:
   max-partition-fetch-bytes-default: 1048576
   max-partition-fetch-bytes-boost-factor: 1
   poll-timeout-ms: 150
-
-dependent-services:
-  payment-service:
-    url: ${PAYMENT_SERVICE_URL}
-  restaurant-service:
-    url: ${RESTAURANT_SERVICE_URL}
 
 springdoc:
   swagger-ui:

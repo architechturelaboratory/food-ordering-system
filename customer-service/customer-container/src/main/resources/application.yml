@@ -1,5 +1,19 @@
-server:
-  port: ${CUSTOMER_SERVICE_PORT}
+spring:
+  profiles:
+    default: local
+  jpa:
+    open-in-view: false
+    show-sql: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    platform: postgres
+  sql:
+    init:
+      schema-locations: classpath:init-schema.sql
 
 management:
   endpoints:
@@ -13,29 +27,8 @@ management:
 customer-service:
   customer-topic-name: customer
 
-spring:
-  jpa:
-    open-in-view: false
-    show-sql: false
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-  datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-    driver-class-name: org.postgresql.Driver
-    platform: postgres
-  sql:
-    init:
-      mode: ${SQL_INIT_MODE}
-      schema-locations: classpath:init-schema.sql
-
 kafka-config:
-  bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
   schema-registry-url-key: schema.registry.url
-  schema-registry-url: ${SCHEMA_REGISTRY_URL}
   num-of-partitions: 3
   replication-factor: 3
 

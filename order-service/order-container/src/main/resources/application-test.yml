@@ -1,0 +1,28 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:postgresql://postgresql.postgresql.svc.cluster.local:5432/postgres?currentSchema=order&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  sql:
+    init:
+      mode: never
+
+server:
+  port: 8181
+
+logging:
+  level:
+    com.food.ordering.system: INFO
+
+kafka-config:
+  bootstrap-servers: kafka-kafka-bootstrap.kafka.svc.cluster.local:9092
+  schema-registry-url: http://schema-registry.kafka.svc.cluster.local:8081
+
+dependent-services:
+  payment-service:
+    url: http://payment-service
+  restaurant-service:
+    url: http://restaurant-service

@@ -1,0 +1,22 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=restaurant&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified
+    username: postgres
+    password: admin
+  sql:
+    init:
+      mode: always
+
+server:
+  port: 8183
+
+logging:
+  level:
+    com.food.ordering.system: DEBUG
+
+kafka-config:
+  bootstrap-servers: localhost:19092,localhost:29092,localhost:39092
+  schema-registry-url: http://localhost:8081
